@@ -1,0 +1,21 @@
+root = true
+
+[*]
+# Использовать отсутпы для пробелов
+indent_style = space
+
+# Использовать 2 пробела для отступа
+indent_size = 2
+
+# Использовать UTF-8 для всех файлов
+charset = utf-8
+
+# Запретить пробелы в конце строки
+trim_trailing_whitespace = true
+
+# Разрешить пустую строку в конце файла
+insert_final_newline = true
+
+# Строки оканчивать на 0x0A (10 decimal)
+end_of_line = lf
+                                           

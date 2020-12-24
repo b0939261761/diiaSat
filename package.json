@@ -1,0 +1,27 @@
+{
+  "name": "diia-sat",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "serve": "nodemon -r dotenv/config --inspect"
+  },
+  "engines": {
+    "node": "15.4.0",
+    "npm": "7.0.15"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "sleep": "^6.3.0"
+  }
+}
