@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     'comma-dangle': ['error', 'never'],
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+    'arrow-parens': ['error', 'as-needed'],
 
     'no-param-reassign': ['error', {
       props: true,

@@ -6,6 +6,8 @@ import decodeFile from './decodeFile.cjs';
 const host = 'localhost';
 const port = process.env.PORT;
 
+//= ============================================================================
+
 const parseFormData = (contentType, content) => {
   const boundaryMatch = contentType.match(/(?:boundary=)(?<boundary>.+)$/);
   const boundary = boundaryMatch?.groups?.boundary;
@@ -35,6 +37,8 @@ const parseFormData = (contentType, content) => {
   return result;
 };
 
+//= ============================================================================
+
 const requestListener = (req, res) => {
   const contentType = req.headers['content-type'] ?? '';
   const isFormData = contentType.includes('multipart/form-data');
@@ -60,20 +64,28 @@ const requestListener = (req, res) => {
     if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath);
 
     try {
-      decodeFile(path.join(tempPath, encryptedFile.filename.slice(0, -8)), encryptedFile.data);
-      decodeFile(path.join(tempPath, 'encodeData.json'), result.body.encodeData);
+      const dataEF = decodeFile(encryptedFile.data);
+      fs.writeFileSync(path.join(tempPath, encryptedFile.filename.slice(0, -8)), dataEF);
+
+      const dataED = decodeFile(encodeData);
+      fs.writeFileSync(path.join(tempPath, 'encodeData.json'), dataED);
     } catch (err) {
       console.error(`Error: ${err}`);
+      res.writeHead(400);
+      res.end();
+      return;
     }
 
     res.writeHead(204);
     res.end();
   };
 
-  req.on('data', (chunk) => chunks.push(chunk));
-  res.on('error', (err) => console.error(err));
+  req.on('data', chunk => chunks.push(chunk));
+  res.on('error', err => console.error(err));
   req.on('end', onEnd);
 };
+
+//= ============================================================================
 
 const server = http.createServer(requestListener);
 server.listen(port, host, () => console.info(`Server running at http://${host}:${port}/`));

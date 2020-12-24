@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-eval */
 
@@ -22,7 +21,7 @@ const issuerCN = '"Дія". Кваліфікований надавач елек
 const SetSettings = () => {
   const offline = false;
 
-  const CASettings = dataCAs.find((el) => el.issuerCNs.includes(issuerCN));
+  const CASettings = dataCAs.find(el => el.issuerCNs.includes(issuerCN));
 
   euSign.SetJavaStringCompliant(true);
 
@@ -56,11 +55,11 @@ const SetSettings = () => {
 
   const OCSPAccessInfoSettings = euSign.CreateOCSPAccessInfoSettings();
 
-  dataCAs.forEach((ca) => {
+  dataCAs.forEach(ca => {
     OCSPAccessInfoSettings.SetAddress(ca.ocspAccessPointAddress);
     OCSPAccessInfoSettings.SetPort(ca.ocspAccessPointPort);
 
-    ca.issuerCNs.forEach((issuer) => {
+    ca.issuerCNs.forEach(issuer => {
       OCSPAccessInfoSettings.SetIssuerCN(issuer);
       euSign.SetOCSPAccessInfoSettings(OCSPAccessInfoSettings);
     });
@@ -77,6 +76,7 @@ const SetSettings = () => {
 
 //= ============================================================================
 
+// eslint-disable-next-line no-unused-vars
 const EUSignCPModuleInitialized = () => {
   try {
     SetSettings();
@@ -94,9 +94,9 @@ const EUSignCPModuleInitialized = () => {
 // eslint-disable-next-line no-undef
 const euSign = EUSignCP();
 
-module.exports = (filename, base64Data) => {
+module.exports = base64Data => {
   const decodeData = euSign.Base64Decode(base64Data);
   const { data: dataSigned } = euSign.DevelopData(decodeData);
   const data = euSign.GetDataFromSignedData(dataSigned);
-  fs1.writeFileSync(filename, Buffer.from(data));
+  return Buffer.from(data);
 };
