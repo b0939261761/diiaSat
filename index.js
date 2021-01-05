@@ -81,7 +81,7 @@ const requestListener = (req, res) => {
   };
 
   req.on('data', chunk => chunks.push(chunk));
-  res.on('error', err => console.error(err));
+  req.on('error', err => console.error(err));
   req.on('end', onEnd);
 };
 
